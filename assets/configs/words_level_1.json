@@ -1,0 +1,12 @@
+[
+  { "text": "CANE", "image": "assets/images/cane.png" },
+  { "text": "GATTO", "image": "assets/images/gatto.png" },
+  { "text": "MELA", "image": "assets/images/mela.png" },
+  { "text": "PALLA", "image": "assets/images/palla.png" },
+  { "text": "LUNA", "image": "assets/images/luna.png" },
+  { "text": "SOLE", "image": "assets/images/sole.png" },
+  { "text": "CIELO", "image": "assets/images/cielo.png" },
+  { "text": "ACQUA", "image": "assets/images/acqua.png" },
+  { "text": "ALBERO", "image": "assets/images/albero.png" },
+  { "text": "CASA", "image": "assets/images/casa.png" }
+]

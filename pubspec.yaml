@@ -1,0 +1,23 @@
+name: impariamo_reading_app
+description: A minimal scaffold for the Children Reading App (offline-first)
+version: 0.0.1
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  flutter_bloc: ^8.1.2
+  uuid: ^3.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/configs/
+    - assets/images/

@@ -1,0 +1,11 @@
+{
+  "id": "level-2",
+  "name": "Livello 2 - Parole composte",
+  "order": 2,
+  "difficulty": "medium",
+  "poolSize": 60,
+  "sessionSize": 10,
+  "displayCase": "lower",
+  "wordCriteria": { "maxSyllables": 3 },
+  "words": "words_level_2.json"
+}

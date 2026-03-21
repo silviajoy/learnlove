@@ -1,0 +1,11 @@
+{
+  "id": "level-1",
+  "name": "Livello 1 - Parole semplici",
+  "order": 1,
+  "difficulty": "easy",
+  "poolSize": 50,
+  "sessionSize": 10,
+  "displayCase": "upper",
+  "wordCriteria": { "maxSyllables": 2 },
+  "words": "words_level_1.json"
+}
