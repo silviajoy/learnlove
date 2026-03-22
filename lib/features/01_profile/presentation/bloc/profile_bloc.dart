@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import '../../../../core/models/child_profile.dart';
+import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
 import '../../../../core/repositories/profiles_repository.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';

@@ -1,4 +1,4 @@
-import '../../../../core/models/child_profile.dart';
+import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
 
 abstract class ProfileState {}
 

@@ -1,6 +1,6 @@
-import '../models/level_progress.dart';
-import '../models/word.dart';
-import '../models/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
 
 abstract class LevelsRepository {
   Future<List<Word>> getWordsForLevel(String levelId);

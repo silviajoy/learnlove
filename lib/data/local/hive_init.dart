@@ -1,11 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../core/models/child_profile.dart';
-import '../../core/models/word.dart';
-import '../../core/models/image_asset.dart';
-import '../../core/models/progress_record.dart';
-import '../../core/models/attempt.dart';
-import '../../core/models/session.dart';
-import '../../core/models/level_progress.dart';
+import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/attempt.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
 
 const String profilesBoxName = 'profilesBox';
 const String wordsBoxName = 'wordsBox';

@@ -1,10 +1,10 @@
 import 'package:hive/hive.dart';
-import '../../core/models/child_profile.dart';
-import '../../core/models/progress_record.dart';
-import '../../core/models/image_asset.dart';
-import '../../core/models/level_progress.dart';
-import '../../core/models/session.dart';
-import '../../core/models/word.dart';
+import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
 import '../../core/repositories/profiles_repository.dart';
 import '../../core/repositories/levels_repository.dart';
 import '../../core/repositories/progress_repository.dart';

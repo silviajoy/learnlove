@@ -1,5 +1,5 @@
-import '../../../../core/models/session.dart';
-import '../../../../core/models/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
 import '../../../../core/repositories/levels_repository.dart';
 import '../../../../core/repositories/sessions_repository.dart';
 

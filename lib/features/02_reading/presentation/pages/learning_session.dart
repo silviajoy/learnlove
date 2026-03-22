@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/navigation/app_router.dart';
 import '../bloc/session_bloc.dart';
 import '../../../../core/repositories/levels_repository.dart';
-import '../../../../core/models/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
 import '../bloc/session_event.dart';
 import '../bloc/session_state.dart';
 

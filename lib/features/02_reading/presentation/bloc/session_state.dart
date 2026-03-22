@@ -1,5 +1,5 @@
-import '../../../../core/models/word.dart';
-import '../../../../core/models/session.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
 
 abstract class SessionState {}
 

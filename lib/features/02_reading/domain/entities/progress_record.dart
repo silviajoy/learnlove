@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'uuid_helper.dart';
+import 'package:impariamo_reading_app/core/utils/uuid_helper.dart';
 
 @HiveType(typeId: 3)
 class ProgressRecord extends HiveObject {

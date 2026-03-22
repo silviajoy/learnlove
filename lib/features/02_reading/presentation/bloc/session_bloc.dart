@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../../../core/models/session.dart';
-import '../../../../core/models/attempt.dart';
-import '../../../../core/models/word.dart';
-import '../../../../core/models/progress_record.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/attempt.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
 
 import '../../../../core/repositories/levels_repository.dart';
 import '../../../../core/repositories/progress_repository.dart';
