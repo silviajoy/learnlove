@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../blocs/profile/profile_bloc.dart';
-import '../../blocs/profile/profile_event.dart';
-import '../../blocs/profile/profile_state.dart';
-import '../../core/models/child_profile.dart';
+import '../bloc/profile_bloc.dart';
+import '../bloc/profile_event.dart';
+import '../bloc/profile_state.dart';
+import '../../../../core/models/child_profile.dart';
 
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import '../../core/models/child_profile.dart';
-import '../../core/repositories/profiles_repository.dart';
+import '../../../../core/models/child_profile.dart';
+import '../../../../core/repositories/profiles_repository.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
 

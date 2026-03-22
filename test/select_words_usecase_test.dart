@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:impariamo_reading_app/features/learning/domain/select_words_usecase.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/usecases/select_words_usecase.dart';
 
 void main() {
   test('SelectWordsUseCase constructs with default sessionSize', () {

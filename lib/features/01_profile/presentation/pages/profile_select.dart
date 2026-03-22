@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../blocs/profile/profile_bloc.dart';
-import '../../blocs/profile/profile_event.dart';
-import '../../blocs/profile/profile_state.dart';
+import '../bloc/profile_bloc.dart';
+import '../bloc/profile_event.dart';
+import '../bloc/profile_state.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/navigation/app_router.dart';
+import '../../../../core/navigation/app_router.dart';
 
 class ProfileSelectScreen extends StatefulWidget {
   const ProfileSelectScreen({super.key});

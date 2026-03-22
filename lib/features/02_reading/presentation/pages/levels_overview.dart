@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/navigation/app_router.dart';
+import '../../../../core/navigation/app_router.dart';
 
-import '../../core/models/level_progress.dart';
-import '../../core/repositories/levels_repository.dart';
+import '../../../../core/models/level_progress.dart';
+import '../../../../core/repositories/levels_repository.dart';
  
 
 class LevelsOverviewScreen extends StatefulWidget {

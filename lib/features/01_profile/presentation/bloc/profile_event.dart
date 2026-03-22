@@ -1,4 +1,4 @@
-import '../../core/models/child_profile.dart';
+import '../../../../core/models/child_profile.dart';
 
 abstract class ProfileEvent {}
 

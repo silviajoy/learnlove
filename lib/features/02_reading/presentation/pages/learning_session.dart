@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/navigation/app_router.dart';
-import '../../blocs/session/session_bloc.dart';
-import '../../core/repositories/levels_repository.dart';
-import '../../core/models/image_asset.dart';
-import '../../blocs/session/session_event.dart';
-import '../../blocs/session/session_state.dart';
+import '../../../../core/navigation/app_router.dart';
+import '../bloc/session_bloc.dart';
+import '../../../../core/repositories/levels_repository.dart';
+import '../../../../core/models/image_asset.dart';
+import '../bloc/session_event.dart';
+import '../bloc/session_state.dart';
 
 class LearningSessionScreen extends StatelessWidget {
   const LearningSessionScreen({super.key, required this.childId, required this.levelId});

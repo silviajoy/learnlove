@@ -2,16 +2,16 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../core/models/session.dart';
-import '../../core/models/attempt.dart';
-import '../../core/models/word.dart';
-import '../../core/models/progress_record.dart';
- 
-import '../../core/repositories/levels_repository.dart';
-import '../../core/repositories/progress_repository.dart';
-import '../../core/repositories/sessions_repository.dart';
-import '../../features/learning/domain/select_words_usecase.dart';
-import '../../features/learning/domain/save_session_usecase.dart';
+import '../../../../core/models/session.dart';
+import '../../../../core/models/attempt.dart';
+import '../../../../core/models/word.dart';
+import '../../../../core/models/progress_record.dart';
+
+import '../../../../core/repositories/levels_repository.dart';
+import '../../../../core/repositories/progress_repository.dart';
+import '../../../../core/repositories/sessions_repository.dart';
+import '../../domain/usecases/select_words_usecase.dart';
+import '../../domain/usecases/save_session_usecase.dart';
 import 'session_event.dart';
 import 'session_state.dart';
 

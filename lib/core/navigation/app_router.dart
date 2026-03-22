@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
-import '../../ui/screens/profile_select.dart';
-import '../../ui/screens/levels_overview.dart';
-import '../../ui/screens/learning_session.dart';
-import '../../ui/screens/create_profile.dart';
+import '../../features/01_profile/presentation/pages/profile_select.dart';
+import '../../features/02_reading/presentation/pages/levels_overview.dart';
+import '../../features/02_reading/presentation/pages/learning_session.dart';
+import '../../features/01_profile/presentation/pages/create_profile.dart';
 
 class AppRoutes {
   static const profiles = 'profiles';

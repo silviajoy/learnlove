@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
 import '../../data/local/hive_repository.dart';
-import '../../blocs/session/session_bloc.dart';
-import '../../blocs/profile/profile_bloc.dart';
-import '../../features/learning/domain/select_words_usecase.dart';
-import '../../features/learning/domain/save_session_usecase.dart';
+import '../../features/02_reading/presentation/bloc/session_bloc.dart';
+import '../../features/01_profile/presentation/bloc/profile_bloc.dart';
+import '../../features/02_reading/domain/usecases/select_words_usecase.dart';
+import '../../features/02_reading/domain/usecases/save_session_usecase.dart';
 import '../repositories/levels_repository.dart' as levels_repo;
 import '../repositories/profiles_repository.dart' as profiles_repo;
 import '../repositories/progress_repository.dart' as progress_repo;

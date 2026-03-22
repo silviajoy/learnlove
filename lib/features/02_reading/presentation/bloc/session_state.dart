@@ -1,5 +1,5 @@
-import '../../core/models/word.dart';
-import '../../core/models/session.dart';
+import '../../../../core/models/word.dart';
+import '../../../../core/models/session.dart';
 
 abstract class SessionState {}
 
