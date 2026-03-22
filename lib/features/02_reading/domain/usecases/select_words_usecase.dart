@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
-import '../../../../core/repositories/progress_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/progress_repository.dart';
 
 /// Pure Dart use-case to select words for a session.
 class SelectWordsUseCase {

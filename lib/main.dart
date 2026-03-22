@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'data/local/hive_init.dart';
 import 'data/local/hive_repository.dart';
-import 'core/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';

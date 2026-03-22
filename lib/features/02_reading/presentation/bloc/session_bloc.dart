@@ -7,9 +7,9 @@ import 'package:impariamo_reading_app/features/02_reading/domain/entities/progre
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
 
-import '../../../../core/repositories/levels_repository.dart';
-import '../../../../core/repositories/progress_repository.dart';
-import '../../../../core/repositories/sessions_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/progress_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/sessions_repository.dart';
 import '../../domain/usecases/select_words_usecase.dart';
 import '../../domain/usecases/save_session_usecase.dart';
 import 'session_event.dart';

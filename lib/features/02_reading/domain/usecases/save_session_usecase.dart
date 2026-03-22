@@ -1,7 +1,7 @@
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
-import '../../../../core/repositories/levels_repository.dart';
-import '../../../../core/repositories/sessions_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/sessions_repository.dart';
 
 /// Use-case that finalizes a session: marks end time, computes stars and saves
 /// level progress and the session via the provided repository.

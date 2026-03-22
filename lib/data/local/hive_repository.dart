@@ -5,10 +5,10 @@ import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
-import '../../core/repositories/profiles_repository.dart';
-import '../../core/repositories/levels_repository.dart';
-import '../../core/repositories/progress_repository.dart';
-import '../../core/repositories/sessions_repository.dart';
+import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/progress_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/sessions_repository.dart';
 
 /// Minimal Hive-backed repository implementation. This file provides example
 /// methods; extend as needed. The repository abstracts Hive boxes used by the
