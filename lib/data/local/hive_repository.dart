@@ -7,11 +7,13 @@ import '../../core/models/session.dart';
 import '../../core/models/word.dart';
 import '../../core/repositories/profiles_repository.dart';
 import '../../core/repositories/levels_repository.dart';
+import '../../core/repositories/progress_repository.dart';
+import '../../core/repositories/sessions_repository.dart';
 
 /// Minimal Hive-backed repository implementation. This file provides example
 /// methods; extend as needed. The repository abstracts Hive boxes used by the
 /// app.
-class HiveLocalRepository implements ProfilesRepository, LevelsRepository {
+class HiveLocalRepository implements ProfilesRepository, LevelsRepository, ProgressRepository, SessionsRepository {
   final Box<ChildProfile> profilesBox;
   final Box<Word> wordsBox;
   final Box<ImageAsset> imagesBox;
@@ -79,10 +81,12 @@ class HiveLocalRepository implements ProfilesRepository, LevelsRepository {
   }
 
   // Progress helpers
+  @override
   Future<void> saveProgressRecord(ProgressRecord record) async {
     await progressBox.put(record.id, record);
   }
 
+  @override
   Future<ProgressRecord?> getProgressForChildWord(String childId, String wordId) async {
     try {
       return progressBox.values.firstWhere((p) => p.childId == childId && p.wordId == wordId);
@@ -91,14 +95,17 @@ class HiveLocalRepository implements ProfilesRepository, LevelsRepository {
     }
   }
 
+  @override
   Future<List<ProgressRecord>> getProgressForChild(String childId) async {
     return progressBox.values.where((p) => p.childId == childId).toList();
   }
 
+  @override
   Future<void> saveSession(Session session) async {
     await sessionsBox.put(session.id, session);
   }
 
+  @override
   Future<List<Session>> getSessionsForChild(String childId) async {
     return sessionsBox.values.where((s) => s.childId == childId).toList();
   }

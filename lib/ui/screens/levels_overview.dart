@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../core/navigation/app_router.dart';
 
 import '../../core/models/level_progress.dart';
 import '../../core/repositories/levels_repository.dart';
-import 'learning_session.dart';
+ 
 
 class LevelsOverviewScreen extends StatefulWidget {
   const LevelsOverviewScreen({super.key, required this.childId});
@@ -96,7 +98,7 @@ class _LevelsOverviewScreenState extends State<LevelsOverviewScreen> {
                   ),
                   trailing: Row(mainAxisSize: MainAxisSize.min, children: List.generate(3, (i) => Padding(padding: const EdgeInsets.symmetric(horizontal: 2.0), child: Icon(i < best ? Icons.star : Icons.star_border, color: Colors.amber, size: 18)))),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => LearningSessionScreen(childId: widget.childId, levelId: cfg['id'] as String)));
+                    GoRouter.of(context).pushNamed(AppRoutes.session, params: {'childId': widget.childId, 'levelId': cfg['id'] as String});
                   },
                 ),
               ),

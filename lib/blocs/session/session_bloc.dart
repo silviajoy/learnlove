@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 
@@ -7,19 +6,27 @@ import '../../core/models/session.dart';
 import '../../core/models/attempt.dart';
 import '../../core/models/word.dart';
 import '../../core/models/progress_record.dart';
-import '../../core/models/level_progress.dart';
-import '../../data/local/hive_repository.dart';
+ 
+import '../../core/repositories/levels_repository.dart';
+import '../../core/repositories/progress_repository.dart';
+import '../../core/repositories/sessions_repository.dart';
+import '../../features/learning/domain/select_words_usecase.dart';
+import '../../features/learning/domain/save_session_usecase.dart';
 import 'session_event.dart';
 import 'session_state.dart';
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
-  final HiveLocalRepository repository;
+  final LevelsRepository levelsRepository;
+  final ProgressRepository progressRepository;
+  final SessionsRepository sessionsRepository;
+  final SelectWordsUseCase selector;
+  final SaveSessionUseCase saver;
   static const int sessionSize = 10;
 
   late Session _session;
   late List<Word> _playlist;
 
-  SessionBloc({required this.repository}) : super(SessionInitial()) {
+  SessionBloc({required this.levelsRepository, required this.progressRepository, required this.sessionsRepository, required this.selector, required this.saver}) : super(SessionInitial()) {
     on<StartSession>(_onStartSession);
     on<NextWordRequested>(_onNextWord);
     on<RevealImageRequested>(_onRevealImage);
@@ -29,11 +36,11 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   Future<void> _onStartSession(StartSession event, Emitter<SessionState> emit) async {
     emit(SessionLoading());
     try {
-      final words = await repository.getWordsForLevel(event.levelId);
-      // select playlist
-      _playlist = await _selectWordsForSession(event.childId, event.levelId, words);
+      final words = await levelsRepository.getWordsForLevel(event.levelId);
+      // select playlist using injected use-case (uses progressRepository)
+      _playlist = await selector(progressRepository: progressRepository, childId: event.childId, levelId: event.levelId, allWords: words);
       _session = Session(childId: event.childId, levelId: event.levelId, total: _playlist.length);
-      await repository.saveSession(_session);
+      await sessionsRepository.saveSession(_session);
       if (_playlist.isEmpty) {
         emit(SessionFailure('No words available'));
         return;
@@ -45,40 +52,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     }
   }
 
-  Future<List<Word>> _selectWordsForSession(String childId, String levelId, List<Word> allWords) async {
-    final rng = Random();
-    if (allWords.isEmpty) return [];
-    final progressList = await repository.getProgressForChild(childId);
-    final Map<String, ProgressRecord> map = {for (var p in progressList) p.wordId: p};
-
-    final unsolved = <Word>[];
-    final solved = <Word>[];
-    for (final w in allWords) {
-      final p = map[w.id];
-      if (p == null || p.completed == false) {
-        unsolved.add(w);
-      } else {
-        solved.add(w);
-      }
-    }
-
-    final selected = <Word>[];
-    unsolved.shuffle(rng);
-    selected.addAll(unsolved.take(min(unsolved.length, sessionSize)));
-    if (selected.length < sessionSize) {
-      // fill with least recently seen solved words
-      solved.sort((a, b) {
-        final pa = map[a.id]!.lastSeen?.millisecondsSinceEpoch ?? 0;
-        final pb = map[b.id]!.lastSeen?.millisecondsSinceEpoch ?? 0;
-        return pa.compareTo(pb);
-      });
-      final need = sessionSize - selected.length;
-      selected.addAll(solved.take(min(need, solved.length)));
-    }
-    // final shuffle to mix
-    selected.shuffle(rng);
-    return selected;
-  }
+  // Selection logic moved to SelectWordsUseCase in domain layer.
 
   Future<void> _onNextWord(NextWordRequested event, Emitter<SessionState> emit) async {
     final state = this.state;
@@ -86,17 +60,9 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       final nextIndex = state.currentIndex + 1;
       if (nextIndex >= _playlist.length) {
         // finish
-        _session.end = DateTime.now();
-        await repository.saveSession(_session);
+        // delegate session finalization to use-case
+        await saver(levelsRepository: levelsRepository, sessionsRepository: sessionsRepository, session: _session, correctCount: state.correctCount, total: state.total);
         final stars = _computeStars(state.correctCount, state.total);
-        // update LevelProgress
-        final lp = await repository.getLevelProgress(_session.childId, _session.levelId) ?? LevelProgress(childId: _session.childId, levelId: _session.levelId);
-        lp.lastStars = stars;
-        lp.lastCorrectCount = state.correctCount;
-        lp.lastTotal = state.total;
-        lp.updatedAt = DateTime.now();
-        lp.bestStars = max(lp.bestStars, stars);
-        await repository.saveLevelProgress(lp);
         emit(SessionCompleted(session: _session, stars: stars, correctCount: state.correctCount, total: state.total));
       } else {
         final w = _playlist[nextIndex];
@@ -121,33 +87,26 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       state.session.attempts.add(attempt);
       if (wasCorrect) state.session.correctCount += 1;
       // update progress record
-      final pr = await repository.getProgressForChildWord(state.session.childId, state.currentWord.id);
+      final pr = await progressRepository.getProgressForChildWord(state.session.childId, state.currentWord.id);
       if (pr == null) {
         final newPr = ProgressRecord(childId: state.session.childId, wordId: state.currentWord.id, completed: wasCorrect, attempts: wasCorrect ? 1 : 1, lastSeen: DateTime.now());
-        await repository.saveProgressRecord(newPr);
+        await progressRepository.saveProgressRecord(newPr);
       } else {
         pr.attempts = pr.attempts + 1;
         pr.completed = pr.completed || wasCorrect;
         pr.lastSeen = DateTime.now();
-        await repository.saveProgressRecord(pr);
+        await progressRepository.saveProgressRecord(pr);
       }
       // save session progress
-      await repository.saveSession(state.session);
+      await sessionsRepository.saveSession(state.session);
       // move to next word or finish
       final correctCount = state.correctCount + (wasCorrect ? 1 : 0);
       final currentIndex = state.currentIndex;
       if (currentIndex + 1 >= _playlist.length) {
         // finish immediately
-        _session.end = DateTime.now();
+        // delegate finalization
+        await saver(levelsRepository: levelsRepository, sessionsRepository: sessionsRepository, session: _session, correctCount: correctCount, total: state.total);
         final stars = _computeStars(correctCount, state.total);
-        final lp = await repository.getLevelProgress(_session.childId, _session.levelId) ?? LevelProgress(childId: _session.childId, levelId: _session.levelId);
-        lp.lastStars = stars;
-        lp.lastCorrectCount = correctCount;
-        lp.lastTotal = state.total;
-        lp.updatedAt = DateTime.now();
-        lp.bestStars = max(lp.bestStars, stars);
-        await repository.saveLevelProgress(lp);
-        await repository.saveSession(_session);
         emit(SessionCompleted(session: _session, stars: stars, correctCount: correctCount, total: state.total));
       } else {
         final nextWord = _playlist[currentIndex + 1];

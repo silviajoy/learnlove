@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../blocs/profile/profile_bloc.dart';
 import '../../blocs/profile/profile_event.dart';
@@ -36,7 +37,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileCreationSuccess) {
-            Navigator.of(context).pop();
+            GoRouter.of(context).pop();
           }
           if (state is AgeVerificationFailed) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.reason)));

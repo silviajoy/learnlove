@@ -14,7 +14,11 @@ import 'core/models/session.dart';
 import 'data/local/seed.dart';
 import 'blocs/profile/profile_bloc.dart';
 import 'blocs/session/session_bloc.dart';
-import 'ui/screens/profile_select.dart';
+import 'core/di/injection.dart';
+import 'core/theme/app_theme.dart';
+import 'core/navigation/app_router.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,30 +44,32 @@ Future<void> main() async {
   final seeder = Seeder(repo);
   await seeder.seedAllLevels();
 
-  final profileBloc = ProfileBloc(repository: repo, verificationService: VerificationService());
-  final sessionBloc = SessionBloc(repository: repo);
+  // configure DI for get_it
+  configureDependencies(repo);
+  final router = AppRouter.createRouter();
 
   runApp(RepositoryProvider<LevelsRepository>.value(
     value: repo,
     child: MultiBlocProvider(
       providers: [
-        BlocProvider<ProfileBloc>.value(value: profileBloc),
-        BlocProvider<SessionBloc>.value(value: sessionBloc),
+        BlocProvider(create: (context) => GetIt.instance<ProfileBloc>()),
+        BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
       ],
-      child: const MyApp(),
+      child: MyApp(router: router),
     ),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.router});
+  final GoRouter router;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Impariamo',
-      theme: ThemeData.light(),
-      home: const ProfileSelectScreen(),
+      theme: AppTheme.light,
+      routerConfig: router,
     );
   }
 }

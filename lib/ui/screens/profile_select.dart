@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/profile/profile_bloc.dart';
 import '../../blocs/profile/profile_event.dart';
 import '../../blocs/profile/profile_state.dart';
-import '../../core/models/child_profile.dart';
-import 'create_profile.dart';
-import 'levels_overview.dart';
+import 'package:go_router/go_router.dart';
+import '../../core/navigation/app_router.dart';
 
 class ProfileSelectScreen extends StatefulWidget {
   const ProfileSelectScreen({super.key});
@@ -37,7 +36,7 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
       child: Scaffold(
         appBar: AppBar(title: const Text('Scegli profilo')),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateProfileScreen())),
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoutes.createProfile),
           child: const Icon(Icons.add),
         ),
         body: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
@@ -46,8 +45,8 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
             final profiles = state.profiles;
             if (profiles.isEmpty) {
               return Center(child: TextButton(onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CreateProfileScreen()));
-              }, child: const Text('Crea profilo')));
+                  GoRouter.of(context).pushNamed(AppRoutes.createProfile);
+                }, child: const Text('Crea profilo')));
             }
             return ListView.builder(
               itemCount: profiles.length,
@@ -57,9 +56,7 @@ class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
                   leading: CircleAvatar(child: Text(p.name.isNotEmpty ? p.name[0] : '?')),
                   title: Text(p.name),
                   subtitle: Text('Età: ${p.age}'),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => LevelsOverviewScreen(childId: p.id)));
-                  },
+                  onTap: () => GoRouter.of(context).goNamed(AppRoutes.levels, params: {'childId': p.id}),
                 );
               },
             );

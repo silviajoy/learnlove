@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../core/navigation/app_router.dart';
 import '../../blocs/session/session_bloc.dart';
 import '../../core/repositories/levels_repository.dart';
 import '../../core/models/image_asset.dart';
@@ -80,8 +82,8 @@ class LearningSessionScreen extends StatelessWidget {
                 Text('${state.correctCount}/${state.total} risposte corrette'),
                 const SizedBox(height: 16),
                 ElevatedButton(onPressed: () {
-                  // replay same level
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => LearningSessionScreen(childId: state.session.childId, levelId: state.session.levelId)));
+                  // replay same level via router
+                  GoRouter.of(context).pushNamed(AppRoutes.session, params: {'childId': state.session.childId, 'levelId': state.session.levelId});
                 }, child: const Text('Riprova'))
               ],
             ),
