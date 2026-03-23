@@ -4,10 +4,10 @@ import '../../features/02_reading/presentation/bloc/session_bloc.dart';
 import '../../features/01_profile/presentation/bloc/profile_bloc.dart';
 import '../../features/02_reading/domain/usecases/select_words_usecase.dart';
 import '../../features/02_reading/domain/usecases/save_session_usecase.dart';
-import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart' as profiles_repo;
-import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart' as levels_repo;
-import 'package:impariamo_reading_app/features/02_reading/domain/repositories/progress_repository.dart' as progress_repo;
-import 'package:impariamo_reading_app/features/02_reading/domain/repositories/sessions_repository.dart' as sessions_repo;
+import 'package:impariamo_reading_app/core/repositories/profiles_repository.dart' as profiles_repo;
+import 'package:impariamo_reading_app/core/repositories/levels_repository.dart' as levels_repo;
+import 'package:impariamo_reading_app/core/repositories/progress_repository.dart' as progress_repo;
+import 'package:impariamo_reading_app/core/repositories/sessions_repository.dart' as sessions_repo;
 
 final GetIt getIt = GetIt.instance;
 

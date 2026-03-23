@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/navigation/app_router.dart';
 import '../bloc/session_bloc.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
+import 'package:impariamo_reading_app/core/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/image_asset.dart';
 import '../bloc/session_event.dart';
 import '../bloc/session_state.dart';
 

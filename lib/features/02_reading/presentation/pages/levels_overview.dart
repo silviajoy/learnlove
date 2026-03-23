@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/navigation/app_router.dart';
 
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/level_progress.dart';
+import 'package:impariamo_reading_app/core/repositories/levels_repository.dart';
  
 
 class LevelsOverviewScreen extends StatefulWidget {

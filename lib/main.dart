@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'data/local/hive_init.dart';
 import 'data/local/hive_repository.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
-import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
+import 'package:impariamo_reading_app/core/repositories/levels_repository.dart';
+import 'package:impariamo_reading_app/features/01_profile/data/models/child_profile_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/image_asset_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/level_progress_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/progress_record_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/session_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/word_dto.dart';
 import 'data/local/seed.dart';
 import 'features/01_profile/presentation/bloc/profile_bloc.dart';
 import 'features/02_reading/presentation/bloc/session_bloc.dart';
@@ -24,12 +24,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initHive();
 
-  final profilesBox = Hive.box<ChildProfile>(profilesBoxName);
-  final wordsBox = Hive.box<Word>(wordsBoxName);
-  final imagesBox = Hive.box<ImageAsset>(imagesBoxName);
-  final progressBox = Hive.box<ProgressRecord>(progressBoxName);
-  final levelProgressBox = Hive.box<LevelProgress>(levelProgressBoxName);
-  final sessionsBox = Hive.box<Session>(sessionsBoxName);
+  final profilesBox = Hive.box<ChildProfileDto>(profilesBoxName);
+  final wordsBox = Hive.box<WordDto>(wordsBoxName);
+  final imagesBox = Hive.box<ImageAssetDto>(imagesBoxName);
+  final progressBox = Hive.box<ProgressRecordDto>(progressBoxName);
+  final levelProgressBox = Hive.box<LevelProgressDto>(levelProgressBoxName);
+  final sessionsBox = Hive.box<SessionDto>(sessionsBoxName);
 
   final repo = HiveLocalRepository(
     profilesBox: profilesBox,

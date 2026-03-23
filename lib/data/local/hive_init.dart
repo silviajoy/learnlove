@@ -1,11 +1,11 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:impariamo_reading_app/features/01_profile/domain/entities/child_profile.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/attempt.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/progress_record.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/session.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
+import 'package:impariamo_reading_app/features/01_profile/data/models/child_profile_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/attempt_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/image_asset_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/level_progress_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/progress_record_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/session_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/word_dto.dart';
 
 const String profilesBoxName = 'profilesBox';
 const String wordsBoxName = 'wordsBox';
@@ -26,29 +26,28 @@ Future<void> initHive() async {
   Hive.registerAdapter(_SessionAdapter());
   Hive.registerAdapter(_LevelProgressAdapter());
 
-  await Hive.openBox<ChildProfile>(profilesBoxName);
-  await Hive.openBox<Word>(wordsBoxName);
-  await Hive.openBox<ImageAsset>(imagesBoxName);
-  await Hive.openBox<ProgressRecord>(progressBoxName);
-  await Hive.openBox<LevelProgress>(levelProgressBoxName);
-  await Hive.openBox<Session>(sessionsBoxName);
+  await Hive.openBox<ChildProfileDto>(profilesBoxName);
+  await Hive.openBox<WordDto>(wordsBoxName);
+  await Hive.openBox<ImageAssetDto>(imagesBoxName);
+  await Hive.openBox<ProgressRecordDto>(progressBoxName);
+  await Hive.openBox<LevelProgressDto>(levelProgressBoxName);
+  await Hive.openBox<SessionDto>(sessionsBoxName);
 }
 
-class _ChildProfileAdapter extends TypeAdapter<ChildProfile> {
+class _ChildProfileAdapter extends TypeAdapter<ChildProfileDto> {
   @override
   final typeId = 0;
-
   @override
-  ChildProfile read(BinaryReader reader) {
+  ChildProfileDto read(BinaryReader reader) {
     final id = reader.readString();
     final name = reader.readString();
     final avatar = reader.readString();
     final age = reader.readInt();
-    return ChildProfile(id: id, name: name, avatarAssetPath: avatar, age: age);
+    return ChildProfileDto(id: id, name: name, avatarAssetPath: avatar, age: age);
   }
 
   @override
-  void write(BinaryWriter writer, ChildProfile obj) {
+  void write(BinaryWriter writer, ChildProfileDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.name);
     writer.writeString(obj.avatarAssetPath);
@@ -56,21 +55,21 @@ class _ChildProfileAdapter extends TypeAdapter<ChildProfile> {
   }
 }
 
-class _WordAdapter extends TypeAdapter<Word> {
+class _WordAdapter extends TypeAdapter<WordDto> {
   @override
   final typeId = 1;
 
   @override
-  Word read(BinaryReader reader) {
+  WordDto read(BinaryReader reader) {
     final id = reader.readString();
     final text = reader.readString();
     final levelId = reader.readString();
     final imageId = reader.readString();
-    return Word(id: id, text: text, levelId: levelId, imageId: imageId);
+    return WordDto(id: id, text: text, levelId: levelId, imageId: imageId);
   }
 
   @override
-  void write(BinaryWriter writer, Word obj) {
+  void write(BinaryWriter writer, WordDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.text);
     writer.writeString(obj.levelId);
@@ -78,30 +77,30 @@ class _WordAdapter extends TypeAdapter<Word> {
   }
 }
 
-class _ImageAssetAdapter extends TypeAdapter<ImageAsset> {
+class _ImageAssetAdapter extends TypeAdapter<ImageAssetDto> {
   @override
   final typeId = 2;
 
   @override
-  ImageAsset read(BinaryReader reader) {
+  ImageAssetDto read(BinaryReader reader) {
     final id = reader.readString();
     final asset = reader.readString();
-    return ImageAsset(id: id, assetPath: asset);
+    return ImageAssetDto(id: id, assetPath: asset);
   }
 
   @override
-  void write(BinaryWriter writer, ImageAsset obj) {
+  void write(BinaryWriter writer, ImageAssetDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.assetPath);
   }
 }
 
-class _ProgressRecordAdapter extends TypeAdapter<ProgressRecord> {
+class _ProgressRecordAdapter extends TypeAdapter<ProgressRecordDto> {
   @override
   final typeId = 3;
 
   @override
-  ProgressRecord read(BinaryReader reader) {
+  ProgressRecordDto read(BinaryReader reader) {
     final id = reader.readString();
     final childId = reader.readString();
     final wordId = reader.readString();
@@ -109,11 +108,11 @@ class _ProgressRecordAdapter extends TypeAdapter<ProgressRecord> {
     final attempts = reader.readInt();
     final hasDate = reader.readBool();
     final lastSeen = hasDate ? DateTime.fromMillisecondsSinceEpoch(reader.readInt()) : null;
-    return ProgressRecord(id: id, childId: childId, wordId: wordId, completed: completed, attempts: attempts, lastSeen: lastSeen);
+    return ProgressRecordDto(id: id, childId: childId, wordId: wordId, completed: completed, attempts: attempts, lastSeen: lastSeen);
   }
 
   @override
-  void write(BinaryWriter writer, ProgressRecord obj) {
+  void write(BinaryWriter writer, ProgressRecordDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.childId);
     writer.writeString(obj.wordId);
@@ -128,22 +127,22 @@ class _ProgressRecordAdapter extends TypeAdapter<ProgressRecord> {
   }
 }
 
-class _AttemptAdapter extends TypeAdapter<Attempt> {
+class _AttemptAdapter extends TypeAdapter<AttemptDto> {
   @override
   final typeId = 4;
 
   @override
-  Attempt read(BinaryReader reader) {
+  AttemptDto read(BinaryReader reader) {
     final id = reader.readString();
     final wordId = reader.readString();
     final timestamp = DateTime.fromMillisecondsSinceEpoch(reader.readInt());
     final wasCorrect = reader.readBool();
     final attemptNumber = reader.readInt();
-    return Attempt(id: id, wordId: wordId, timestamp: timestamp, wasCorrect: wasCorrect, attemptNumber: attemptNumber);
+    return AttemptDto(id: id, wordId: wordId, timestamp: timestamp, wasCorrect: wasCorrect, attemptNumber: attemptNumber);
   }
 
   @override
-  void write(BinaryWriter writer, Attempt obj) {
+  void write(BinaryWriter writer, AttemptDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.wordId);
     writer.writeInt(obj.timestamp.millisecondsSinceEpoch);
@@ -152,12 +151,12 @@ class _AttemptAdapter extends TypeAdapter<Attempt> {
   }
 }
 
-class _SessionAdapter extends TypeAdapter<Session> {
+class _SessionAdapter extends TypeAdapter<SessionDto> {
   @override
   final typeId = 5;
 
   @override
-  Session read(BinaryReader reader) {
+  SessionDto read(BinaryReader reader) {
     final id = reader.readString();
     final childId = reader.readString();
     final levelId = reader.readString();
@@ -167,16 +166,17 @@ class _SessionAdapter extends TypeAdapter<Session> {
     final correctCount = reader.readInt();
     final total = reader.readInt();
     final attemptsLen = reader.readInt();
-    final attempts = <Attempt>[];
+    final attempts = <AttemptDto>[];
     for (var i = 0; i < attemptsLen; i++) {
       attempts.add(_AttemptAdapter().read(reader));
     }
-    return Session(id: id, childId: childId, levelId: levelId, start: start, attempts: attempts, correctCount: correctCount, total: total)
-      ..end = end;
+    final dto = SessionDto(id: id, childId: childId, levelId: levelId, start: start, attempts: attempts, correctCount: correctCount, total: total);
+    dto.end = end;
+    return dto;
   }
 
   @override
-  void write(BinaryWriter writer, Session obj) {
+  void write(BinaryWriter writer, SessionDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.childId);
     writer.writeString(obj.levelId);
@@ -196,12 +196,12 @@ class _SessionAdapter extends TypeAdapter<Session> {
   }
 }
 
-class _LevelProgressAdapter extends TypeAdapter<LevelProgress> {
+class _LevelProgressAdapter extends TypeAdapter<LevelProgressDto> {
   @override
   final typeId = 6;
 
   @override
-  LevelProgress read(BinaryReader reader) {
+  LevelProgressDto read(BinaryReader reader) {
     final id = reader.readString();
     final childId = reader.readString();
     final levelId = reader.readString();
@@ -211,11 +211,11 @@ class _LevelProgressAdapter extends TypeAdapter<LevelProgress> {
     final lastTotal = reader.readInt();
     final hasDate = reader.readBool();
     final updatedAt = hasDate ? DateTime.fromMillisecondsSinceEpoch(reader.readInt()) : null;
-    return LevelProgress(id: id, childId: childId, levelId: levelId, bestStars: bestStars, lastStars: lastStars, lastCorrectCount: lastCorrectCount, lastTotal: lastTotal, updatedAt: updatedAt);
+    return LevelProgressDto(id: id, childId: childId, levelId: levelId, bestStars: bestStars, lastStars: lastStars, lastCorrectCount: lastCorrectCount, lastTotal: lastTotal, updatedAt: updatedAt);
   }
 
   @override
-  void write(BinaryWriter writer, LevelProgress obj) {
+  void write(BinaryWriter writer, LevelProgressDto obj) {
     writer.writeString(obj.id);
     writer.writeString(obj.childId);
     writer.writeString(obj.levelId);

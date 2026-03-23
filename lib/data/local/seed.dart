@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/image_asset.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/level_progress.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/entities/word.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/data/models/image_asset_dto.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/word.dart';
 import 'hive_repository.dart';
 
 /// Loads seed data from assets/configs and preloads them into Hive via the
@@ -42,7 +43,7 @@ class Seeder {
             final text = item['text'] as String;
             final imgPath = item['image'] as String;
             final img = ImageAsset(assetPath: imgPath);
-            await repo.imagesBox.put(img.id, img);
+            await repo.imagesBox.put(img.id, ImageAssetDto.fromDomain(img));
             final word = Word(text: text, levelId: levelId, imageId: img.id);
             words.add(word);
           }
