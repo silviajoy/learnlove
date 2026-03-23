@@ -1,57 +1,28 @@
 import 'package:hive/hive.dart';
-import 'package:impariamo_reading_app/features/01_profile/data/models/child_profile_dto.dart';
-import 'package:impariamo_reading_app/features/02_reading/data/models/image_asset_dto.dart';
-import 'package:impariamo_reading_app/features/02_reading/data/models/level_progress_dto.dart';
-import 'package:impariamo_reading_app/features/02_reading/data/models/progress_record_dto.dart';
-import 'package:impariamo_reading_app/features/02_reading/data/models/session_dto.dart';
-import 'package:impariamo_reading_app/features/02_reading/data/models/word_dto.dart';
-
-import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/models/image_asset.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/models/level_progress.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/models/progress_record.dart';
-import 'package:impariamo_reading_app/features/02_reading/domain/models/session.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/models/word.dart';
-import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/image_asset.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/progress_record.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/level_progress.dart';
+import 'package:impariamo_reading_app/features/02_reading/domain/models/session.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/repositories/progress_repository.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/repositories/sessions_repository.dart';
+import 'models/word_dto.dart';
+import 'models/image_asset_dto.dart';
+import 'models/progress_record_dto.dart';
+import 'models/level_progress_dto.dart';
+import 'models/session_dto.dart';
 
-/// Minimal Hive-backed repository implementation. This file provides example
-/// methods; extend as needed. The repository abstracts Hive boxes used by the
-/// app.
-class HiveLocalRepository implements ProfilesRepository, LevelsRepository, ProgressRepository, SessionsRepository {
-  final Box<ChildProfileDto> profilesBox;
+class ReadingHiveRepository implements LevelsRepository, ProgressRepository, SessionsRepository {
   final Box<WordDto> wordsBox;
   final Box<ImageAssetDto> imagesBox;
   final Box<ProgressRecordDto> progressBox;
   final Box<LevelProgressDto> levelProgressBox;
   final Box<SessionDto> sessionsBox;
 
-  HiveLocalRepository({required this.profilesBox, required this.wordsBox, required this.imagesBox, required this.progressBox, required this.levelProgressBox, required this.sessionsBox});
+  ReadingHiveRepository({required this.wordsBox, required this.imagesBox, required this.progressBox, required this.levelProgressBox, required this.sessionsBox});
 
-  // ProfilesRepository
-  @override
-  Future<void> addProfile(ChildProfile profile) async {
-    await profilesBox.put(profile.id, ChildProfileDto.fromDomain(profile));
-  }
-
-  @override
-  Future<void> deleteProfile(String id) async {
-    await profilesBox.delete(id);
-  }
-
-  @override
-  Future<List<ChildProfile>> getProfiles() async {
-    return profilesBox.values.map((d) => d.toDomain()).toList();
-  }
-
-  @override
-  Future<void> updateProfile(ChildProfile profile) async {
-    await profilesBox.put(profile.id, ChildProfileDto.fromDomain(profile));
-  }
-
-  // LevelsRepository (partial)
+  // LevelsRepository
   @override
   Future<List<Word>> getWordsForLevel(String levelId) async {
     return wordsBox.values.where((w) => w.levelId == levelId).map((d) => d.toDomain()).toList();
@@ -89,7 +60,12 @@ class HiveLocalRepository implements ProfilesRepository, LevelsRepository, Progr
     }
   }
 
-  // Progress helpers
+  @override
+  Future<void> saveImageAsset(ImageAsset asset) async {
+    await imagesBox.put(asset.id, ImageAssetDto.fromDomain(asset));
+  }
+
+  // ProgressRepository
   @override
   Future<void> saveProgressRecord(ProgressRecord record) async {
     await progressBox.put(record.id, ProgressRecordDto.fromDomain(record));
@@ -110,6 +86,7 @@ class HiveLocalRepository implements ProfilesRepository, LevelsRepository, Progr
     return progressBox.values.where((p) => p.childId == childId).map((d) => d.toDomain()).toList();
   }
 
+  // SessionsRepository
   @override
   Future<void> saveSession(Session session) async {
     await sessionsBox.put(session.id, SessionDto.fromDomain(session));

@@ -1,24 +1,21 @@
 import 'package:get_it/get_it.dart';
-import '../../data/local/hive_repository.dart';
 import '../../features/02_reading/presentation/bloc/session_bloc.dart';
 import '../../features/01_profile/presentation/bloc/profile_bloc.dart';
 import '../../features/02_reading/domain/usecases/select_words_usecase.dart';
 import '../../features/02_reading/domain/usecases/save_session_usecase.dart';
-import 'package:impariamo_reading_app/core/repositories/profiles_repository.dart' as profiles_repo;
-import 'package:impariamo_reading_app/core/repositories/levels_repository.dart' as levels_repo;
-import 'package:impariamo_reading_app/core/repositories/progress_repository.dart' as progress_repo;
-import 'package:impariamo_reading_app/core/repositories/sessions_repository.dart' as sessions_repo;
+import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart' as profiles_repo;
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/levels_repository.dart' as levels_repo;
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/progress_repository.dart' as progress_repo;
+import 'package:impariamo_reading_app/features/02_reading/domain/repositories/sessions_repository.dart' as sessions_repo;
 
 final GetIt getIt = GetIt.instance;
 
-void configureDependencies(HiveLocalRepository repo) {
-  // register concrete repo instances
-  getIt.registerSingleton<HiveLocalRepository>(repo);
-  // register under repository interfaces
-  getIt.registerSingleton<levels_repo.LevelsRepository>(repo);
-  getIt.registerSingleton<profiles_repo.ProfilesRepository>(repo);
-  getIt.registerSingleton<progress_repo.ProgressRepository>(repo);
-  getIt.registerSingleton<sessions_repo.SessionsRepository>(repo);
+void configureDependencies({required profiles_repo.ProfilesRepository profilesRepo, required levels_repo.LevelsRepository levelsRepo, required progress_repo.ProgressRepository progressRepo, required sessions_repo.SessionsRepository sessionsRepo}) {
+  // register concrete repo instances under interfaces
+  getIt.registerSingleton<profiles_repo.ProfilesRepository>(profilesRepo);
+  getIt.registerSingleton<levels_repo.LevelsRepository>(levelsRepo);
+  getIt.registerSingleton<progress_repo.ProgressRepository>(progressRepo);
+  getIt.registerSingleton<sessions_repo.SessionsRepository>(sessionsRepo);
 
   // use-cases
   getIt.registerLazySingleton<SelectWordsUseCase>(() => SelectWordsUseCase(sessionSize: SessionBloc.sessionSize));

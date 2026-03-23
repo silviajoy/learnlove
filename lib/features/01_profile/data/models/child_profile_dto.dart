@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:impariamo_reading_app/core/models/child_profile.dart' as core_model;
+import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart' as core_model;
 
 @HiveType(typeId: 0)
 class ChildProfileDto extends HiveObject {

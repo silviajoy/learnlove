@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../bloc/profile_bloc.dart';
 import '../bloc/profile_event.dart';
 import '../bloc/profile_state.dart';
-import 'package:impariamo_reading_app/core/models/child_profile.dart';
+import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart';
 
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({super.key});

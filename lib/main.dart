@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hive/hive.dart';
 import 'data/local/hive_init.dart';
-import 'data/local/hive_repository.dart';
-import 'package:impariamo_reading_app/core/repositories/levels_repository.dart';
+import 'features/01_profile/data/profile_repository_impl.dart';
+import 'features/02_reading/data/reading_repository_impl.dart';
 import 'package:impariamo_reading_app/features/01_profile/data/models/child_profile_dto.dart';
 import 'package:impariamo_reading_app/features/02_reading/data/models/image_asset_dto.dart';
 import 'package:impariamo_reading_app/features/02_reading/data/models/level_progress_dto.dart';
@@ -31,8 +31,8 @@ Future<void> main() async {
   final levelProgressBox = Hive.box<LevelProgressDto>(levelProgressBoxName);
   final sessionsBox = Hive.box<SessionDto>(sessionsBoxName);
 
-  final repo = HiveLocalRepository(
-    profilesBox: profilesBox,
+  final profileRepo = ProfileHiveRepository(profilesBox: profilesBox);
+  final readingRepo = ReadingHiveRepository(
     wordsBox: wordsBox,
     imagesBox: imagesBox,
     progressBox: progressBox,
@@ -41,22 +41,19 @@ Future<void> main() async {
   );
 
   // Seed sample data (safe to call repeatedly)
-  final seeder = Seeder(repo);
+  final seeder = Seeder(readingRepo);
   await seeder.seedAllLevels();
 
-  // configure DI for get_it
-  configureDependencies(repo);
+  // configure DI for get_it with feature repos
+  configureDependencies(profilesRepo: profileRepo, levelsRepo: readingRepo, progressRepo: readingRepo, sessionsRepo: readingRepo);
   final router = AppRouter.createRouter();
 
-  runApp(RepositoryProvider<LevelsRepository>.value(
-    value: repo,
-    child: MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => GetIt.instance<ProfileBloc>()),
-        BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
-      ],
-      child: MyApp(router: router),
-    ),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(create: (context) => GetIt.instance<ProfileBloc>()),
+      BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
+    ],
+    child: MyApp(router: router),
   ));
 }
 
