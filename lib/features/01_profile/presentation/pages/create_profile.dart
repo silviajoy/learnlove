@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../bloc/profile_bloc.dart';
+import '../bloc/profile_creation_bloc.dart';
 import '../bloc/profile_event.dart';
 import '../bloc/profile_state.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart';
@@ -31,7 +31,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<ProfileBloc>(context);
+    final bloc = BlocProvider.of<ProfileCreationBloc>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Crea profilo')),
       body: BlocConsumer<ProfileBloc, ProfileState>(

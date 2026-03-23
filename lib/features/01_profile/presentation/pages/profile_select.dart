@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/profile_bloc.dart';
+import '../bloc/profiles_list_bloc.dart';
 import '../bloc/profile_event.dart';
 import '../bloc/profile_state.dart';
 import 'package:go_router/go_router.dart';
@@ -14,32 +14,27 @@ class ProfileSelectScreen extends StatefulWidget {
 }
 
 class _ProfileSelectScreenState extends State<ProfileSelectScreen> {
-  late final ProfileBloc bloc;
+  late final ProfilesListBloc bloc;
 
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<ProfileBloc>(context);
+    bloc = BlocProvider.of<ProfilesListBloc>(context);
     bloc.add(LoadProfiles());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileBloc, ProfileState>(
-      listener: (context, state) {
-        if (state is ProfileCreationSuccess) {
-          // reload profiles after creation
+    return Scaffold(
+      appBar: AppBar(title: const Text('Scegli profilo')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await GoRouter.of(context).pushNamed(AppRoutes.createProfile);
           bloc.add(LoadProfiles());
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profilo creato')));
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Scegli profilo')),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoutes.createProfile),
-          child: const Icon(Icons.add),
-        ),
-        body: BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: BlocBuilder<ProfilesListBloc, ProfileState>(builder: (context, state) {
           if (state is ProfilesLoading) return const Center(child: CircularProgressIndicator());
           if (state is ProfilesLoaded) {
             final profiles = state.profiles;

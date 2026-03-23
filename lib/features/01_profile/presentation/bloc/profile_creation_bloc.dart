@@ -10,30 +10,20 @@ class VerificationService {
   late int b;
 
   Map<String, dynamic> generateQuestion() {
-    a = 3 + (DateTime.now().millisecondsSinceEpoch % 7); // simple pseudo-random
+    a = 3 + (DateTime.now().millisecondsSinceEpoch % 7);
     b = 2 + (DateTime.now().millisecondsSinceEpoch % 5);
     return {'question': 'Quanto fa $a × $b ?', 'answer': a * b};
   }
 }
 
-class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+class ProfileCreationBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfilesRepository repository;
   final VerificationService verificationService;
 
   ChildProfile? _pendingProfile;
   int? _expectedAnswer;
 
-  ProfileBloc({required this.repository, required this.verificationService}) : super(ProfilesLoading()) {
-    on<LoadProfiles>((event, emit) async {
-      emit(ProfilesLoading());
-      try {
-        final profiles = await repository.getProfiles();
-        emit(ProfilesLoaded(profiles));
-      } catch (e) {
-        emit(ProfileActionFailure(e.toString()));
-      }
-    });
-
+  ProfileCreationBloc({required this.repository, required this.verificationService}) : super(ProfilesLoading()) {
     on<StartCreateProfile>((event, emit) async {
       _pendingProfile = event.tempProfile;
       final q = verificationService.generateQuestion();
@@ -57,16 +47,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }
       } else {
         emit(AgeVerificationFailed('Risposta errata. Riprova.'));
-      }
-    });
-
-    on<UpdateProfile>((event, emit) async {
-      try {
-        await repository.updateProfile(event.profile);
-        final profiles = await repository.getProfiles();
-        emit(ProfilesLoaded(profiles));
-      } catch (e) {
-        emit(ProfileActionFailure(e.toString()));
       }
     });
   }

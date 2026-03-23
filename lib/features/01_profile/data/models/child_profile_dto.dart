@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart' as core_model;
+import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart' as domain_model;
 
 @HiveType(typeId: 0)
 class ChildProfileDto extends HiveObject {
@@ -17,7 +17,7 @@ class ChildProfileDto extends HiveObject {
 
   ChildProfileDto({required this.id, required this.name, required this.avatarAssetPath, required this.age});
 
-  core_model.ChildProfile toDomain() => core_model.ChildProfile(id: id, name: name, avatarAssetPath: avatarAssetPath, age: age);
+  domain_model.ChildProfile toDomain() => domain_model.ChildProfile(id: id, name: name, avatarAssetPath: avatarAssetPath, age: age);
 
-  static ChildProfileDto fromDomain(core_model.ChildProfile d) => ChildProfileDto(id: d.id, name: d.name, avatarAssetPath: d.avatarAssetPath, age: d.age);
+  static ChildProfileDto fromDomain(domain_model.ChildProfile d) => ChildProfileDto(id: d.id, name: d.name, avatarAssetPath: d.avatarAssetPath, age: d.age);
 }

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:hive/hive.dart';
 import 'data/local/hive_init.dart';
-import 'features/01_profile/data/profile_repository_impl.dart';
+import 'features/01_profile/data/repositories/profile_repository_impl.dart';
 import 'features/02_reading/data/reading_repository_impl.dart';
 import 'package:impariamo_reading_app/features/01_profile/data/models/child_profile_dto.dart';
 import 'package:impariamo_reading_app/features/02_reading/data/models/image_asset_dto.dart';
@@ -12,7 +12,8 @@ import 'package:impariamo_reading_app/features/02_reading/data/models/progress_r
 import 'package:impariamo_reading_app/features/02_reading/data/models/session_dto.dart';
 import 'package:impariamo_reading_app/features/02_reading/data/models/word_dto.dart';
 import 'data/local/seed.dart';
-import 'features/01_profile/presentation/bloc/profile_bloc.dart';
+import 'features/01_profile/presentation/bloc/profiles_list_bloc.dart';
+import 'features/01_profile/presentation/bloc/profile_creation_bloc.dart';
 import 'features/02_reading/presentation/bloc/session_bloc.dart';
 import 'core/di/injection.dart';
 import 'core/theme/app_theme.dart';
@@ -52,7 +53,8 @@ Future<void> main() async {
     value: readingRepo,
     child: MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => GetIt.instance<ProfileBloc>()),
+        BlocProvider(create: (context) => GetIt.instance<ProfilesListBloc>()),
+        BlocProvider(create: (context) => GetIt.instance<ProfileCreationBloc>()),
         BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
       ],
       child: MyApp(router: router),

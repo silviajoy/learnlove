@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import '../../features/02_reading/presentation/bloc/session_bloc.dart';
-import '../../features/01_profile/presentation/bloc/profile_bloc.dart';
+import '../../features/01_profile/presentation/bloc/profiles_list_bloc.dart';
+import '../../features/01_profile/presentation/bloc/profile_creation_bloc.dart';
 import '../../features/02_reading/domain/usecases/select_words_usecase.dart';
 import '../../features/02_reading/domain/usecases/save_session_usecase.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart' as profiles_repo;
@@ -29,5 +30,6 @@ void configureDependencies({required profiles_repo.ProfilesRepository profilesRe
         selector: getIt<SelectWordsUseCase>(),
         saver: getIt<SaveSessionUseCase>(),
       ));
-  getIt.registerFactory<ProfileBloc>(() => ProfileBloc(repository: getIt<profiles_repo.ProfilesRepository>(), verificationService: VerificationService()));
+  getIt.registerFactory<ProfilesListBloc>(() => ProfilesListBloc(repository: getIt<profiles_repo.ProfilesRepository>()));
+  getIt.registerFactory<ProfileCreationBloc>(() => ProfileCreationBloc(repository: getIt<profiles_repo.ProfilesRepository>(), verificationService: VerificationService()));
 }
