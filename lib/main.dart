@@ -48,12 +48,15 @@ Future<void> main() async {
   configureDependencies(profilesRepo: profileRepo, levelsRepo: readingRepo, progressRepo: readingRepo, sessionsRepo: readingRepo);
   final router = AppRouter.createRouter();
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => GetIt.instance<ProfileBloc>()),
-      BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
-    ],
-    child: MyApp(router: router),
+  runApp(RepositoryProvider.value(
+    value: readingRepo,
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => GetIt.instance<ProfileBloc>()),
+        BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
+      ],
+      child: MyApp(router: router),
+    ),
   ));
 }
 

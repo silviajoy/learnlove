@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:impariamo_reading_app/features/02_reading/domain/models/image_asset.dart';
-import 'package:impariamo_reading_app/data/models/image_asset_dto.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/models/level_progress.dart';
 import 'package:impariamo_reading_app/features/02_reading/domain/models/word.dart';
-import 'hive_repository.dart';
 
 /// Loads seed data from assets/configs and preloads them into Hive via the
 /// provided repository.
