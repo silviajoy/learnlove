@@ -9,20 +9,10 @@ class ProfilesLoaded extends ProfileState {
   ProfilesLoaded(this.profiles);
 }
 
-class CreateProfileInProgress extends ProfileState {
-  final ChildProfile tempProfile;
-  final String verificationQuestion;
-  CreateProfileInProgress(this.tempProfile, this.verificationQuestion);
-}
 
-class AgeVerificationFailed extends ProfileState {
-  final String reason;
-  AgeVerificationFailed(this.reason);
-}
-
-class ProfileCreationSuccess extends ProfileState {
+class ProfileActionSuccess extends ProfileState {
   final ChildProfile profile;
-  ProfileCreationSuccess(this.profile);
+  ProfileActionSuccess(this.profile);
 }
 
 class ProfileActionFailure extends ProfileState {

@@ -1,7 +1,9 @@
 import 'package:hive/hive.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart';
-import 'models/child_profile_dto.dart';
+
+import '../models/child_profile_dto.dart';
+
 
 class ProfileHiveRepository implements ProfilesRepository {
   final Box<ChildProfileDto> profilesBox;
@@ -9,8 +11,9 @@ class ProfileHiveRepository implements ProfilesRepository {
   ProfileHiveRepository({required this.profilesBox});
 
   @override
-  Future<void> addProfile(ChildProfile profile) async {
+  Future<ChildProfile> addProfile(ChildProfile profile) async {
     await profilesBox.put(profile.id, ChildProfileDto.fromDomain(profile));
+    return profile;
   }
 
   @override
@@ -24,7 +27,8 @@ class ProfileHiveRepository implements ProfilesRepository {
   }
 
   @override
-  Future<void> updateProfile(ChildProfile profile) async {
+  Future<ChildProfile> updateProfile(ChildProfile profile) async {
     await profilesBox.put(profile.id, ChildProfileDto.fromDomain(profile));
+    return profile;
   }
 }

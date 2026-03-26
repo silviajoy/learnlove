@@ -30,6 +30,6 @@ void configureDependencies({required profiles_repo.ProfilesRepository profilesRe
         selector: getIt<SelectWordsUseCase>(),
         saver: getIt<SaveSessionUseCase>(),
       ));
-  getIt.registerFactory<ProfilesListBloc>(() => ProfilesListBloc(repository: getIt<profiles_repo.ProfilesRepository>()));
-  getIt.registerFactory<ProfileCreationBloc>(() => ProfileCreationBloc(repository: getIt<profiles_repo.ProfilesRepository>(), verificationService: VerificationService()));
+  getIt.registerFactory<ProfilesListCubit>(() => ProfilesListCubit(repository: getIt<profiles_repo.ProfilesRepository>()));
+  getIt.registerFactory<ProfileCreationBloc>(() => ProfileCreationBloc(repository: getIt<profiles_repo.ProfilesRepository>()));
 }

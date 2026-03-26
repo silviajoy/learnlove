@@ -1,0 +1,4 @@
+{
+  // Use the FVM-managed Flutter SDK inside the workspace
+  "dart.flutterSdkPath": ".fvm/flutter_sdk"
+}

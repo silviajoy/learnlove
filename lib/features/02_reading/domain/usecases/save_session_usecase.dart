@@ -12,8 +12,9 @@ class SaveSessionUseCase {
     // compute stars (same rules as SessionBloc)
     int stars = 0;
     if (total > 0) {
-      if (correctCount == total) stars = 3;
-      else if (correctCount >= 8) stars = 2;
+      if (correctCount == total) {
+        stars = 3;
+      } else if (correctCount >= 8) stars = 2;
       else if (correctCount >= 7) stars = 1;
       else stars = 0;
     }

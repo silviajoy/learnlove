@@ -9,19 +9,16 @@ class SelectProfile extends ProfileEvent {
   SelectProfile(this.childId);
 }
 
-class StartCreateProfile extends ProfileEvent {
-  final ChildProfile tempProfile;
-  StartCreateProfile(this.tempProfile);
+class CreateProfile extends ProfileEvent {
+  final ChildProfile profile;
+  CreateProfile(this.profile);
 }
-
-class SubmitAgeVerification extends ProfileEvent {
-  final int answer;
-  SubmitAgeVerification(this.answer);
-}
-
-class ConfirmCreateProfile extends ProfileEvent {}
-
 class UpdateProfile extends ProfileEvent {
   final ChildProfile profile;
   UpdateProfile(this.profile);
+}
+
+class DeleteProfile extends ProfileEvent {
+  final String childId;
+  DeleteProfile(this.childId);
 }

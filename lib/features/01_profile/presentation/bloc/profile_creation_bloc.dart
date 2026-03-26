@@ -1,53 +1,23 @@
+
 import 'package:bloc/bloc.dart';
-import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart';
 import 'profile_event.dart';
 import 'profile_state.dart';
 
-/// Small verification service to generate simple math questions for age verification.
-class VerificationService {
-  late int a;
-  late int b;
-
-  Map<String, dynamic> generateQuestion() {
-    a = 3 + (DateTime.now().millisecondsSinceEpoch % 7);
-    b = 2 + (DateTime.now().millisecondsSinceEpoch % 5);
-    return {'question': 'Quanto fa $a × $b ?', 'answer': a * b};
-  }
-}
-
 class ProfileCreationBloc extends Bloc<ProfileEvent, ProfileState> {
   final ProfilesRepository repository;
-  final VerificationService verificationService;
 
-  ChildProfile? _pendingProfile;
-  int? _expectedAnswer;
+  ProfileCreationBloc({required this.repository}) : super(ProfilesLoading()) {
+    on<CreateProfile>(_onCreateProfile);
+  }
 
-  ProfileCreationBloc({required this.repository, required this.verificationService}) : super(ProfilesLoading()) {
-    on<StartCreateProfile>((event, emit) async {
-      _pendingProfile = event.tempProfile;
-      final q = verificationService.generateQuestion();
-      _expectedAnswer = q['answer'] as int;
-      emit(CreateProfileInProgress(_pendingProfile!, q['question'] as String));
-    });
-
-    on<SubmitAgeVerification>((event, emit) async {
-      if (_expectedAnswer == null || _pendingProfile == null) {
-        emit(AgeVerificationFailed('Nessuna creazione in corso'));
-        return;
-      }
-      if (event.answer == _expectedAnswer) {
-        try {
-          await repository.addProfile(_pendingProfile!);
-          emit(ProfileCreationSuccess(_pendingProfile!));
-          _pendingProfile = null;
-          _expectedAnswer = null;
-        } catch (e) {
-          emit(ProfileActionFailure(e.toString()));
-        }
-      } else {
-        emit(AgeVerificationFailed('Risposta errata. Riprova.'));
-      }
-    });
+  Future<void> _onCreateProfile(CreateProfile event, Emitter<ProfileState> emit) async {
+    emit(ProfilesLoading());
+    try {
+      final newProfile = await repository.addProfile(event.profile);
+      emit(ProfileActionSuccess(newProfile));
+    } catch (e) {
+      emit(ProfileActionFailure(e.toString()));
+    }
   }
 }

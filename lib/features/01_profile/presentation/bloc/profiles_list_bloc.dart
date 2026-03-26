@@ -1,31 +1,40 @@
 import 'package:bloc/bloc.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/models/child_profile.dart';
 import 'package:impariamo_reading_app/features/01_profile/domain/repositories/profiles_repository.dart';
-import 'profile_event.dart';
 import 'profile_state.dart';
 
-class ProfilesListBloc extends Bloc<ProfileEvent, ProfileState> {
+class ProfilesListCubit extends Cubit<ProfileState> {
   final ProfilesRepository repository;
 
-  ProfilesListBloc({required this.repository}) : super(ProfilesLoading()) {
-    on<LoadProfiles>((event, emit) async {
-      emit(ProfilesLoading());
-      try {
-        final profiles = await repository.getProfiles();
-        emit(ProfilesLoaded(profiles));
-      } catch (e) {
-        emit(ProfileActionFailure(e.toString()));
-      }
-    });
+  ProfilesListCubit({required this.repository}) : super(ProfilesLoading());
 
-    on<UpdateProfile>((event, emit) async {
-      try {
-        await repository.updateProfile(event.profile);
-        final profiles = await repository.getProfiles();
-        emit(ProfilesLoaded(profiles));
-      } catch (e) {
-        emit(ProfileActionFailure(e.toString()));
-      }
-    });
+  Future<void> loadProfiles() async {
+    emit(ProfilesLoading());
+    try {
+      final profiles = await repository.getProfiles();
+      emit(ProfilesLoaded(profiles));
+    } catch (e) {
+      emit(ProfileActionFailure(e.toString()));
+    }
+  }
+
+  Future<void> updateProfile(ChildProfile profile) async {
+    try {
+      await repository.updateProfile(profile);
+      final profiles = await repository.getProfiles();
+      emit(ProfilesLoaded(profiles));
+    } catch (e) {
+      emit(ProfileActionFailure(e.toString()));
+    }
+  }
+
+  Future<void> deleteProfile(String childId) async {
+    try {
+      await repository.deleteProfile(childId);
+      final profiles = await repository.getProfiles();
+      emit(ProfilesLoaded(profiles));
+    } catch (e) {
+      emit(ProfileActionFailure(e.toString()));
+    }
   }
 }

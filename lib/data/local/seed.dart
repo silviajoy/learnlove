@@ -29,7 +29,7 @@ class Seeder {
         } else {
           // fallback: derive from level id: level-1 -> level_1 -> words_level_1.json
           final levelKey = levelId.replaceAll('-', '_');
-          wordsFile = 'assets/configs/words_${levelKey}.json';
+          wordsFile = 'assets/configs/words_$levelKey.json';
         }
 
         // load words if present
@@ -53,7 +53,7 @@ class Seeder {
         }
 
         // Optionally ensure a placeholder LevelProgress for demo child exists.
-        final demoChild = 'demo-child';
+        const demoChild = 'demo-child';
         final existing = await repo.getLevelProgress(demoChild, levelId);
         if (existing == null) {
           final dummyProgress = LevelProgress(childId: demoChild, levelId: levelId);

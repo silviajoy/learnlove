@@ -53,7 +53,7 @@ Future<void> main() async {
     value: readingRepo,
     child: MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => GetIt.instance<ProfilesListBloc>()),
+        BlocProvider(create: (context) => GetIt.instance<ProfilesListCubit>()..loadProfiles()),
         BlocProvider(create: (context) => GetIt.instance<ProfileCreationBloc>()),
         BlocProvider(create: (context) => GetIt.instance<SessionBloc>()),
       ],

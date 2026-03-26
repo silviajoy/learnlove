@@ -75,7 +75,7 @@ class LearningSessionScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.celebration, size: 72, color: Colors.amber),
                 const SizedBox(height: 12),
-                Text('Bravo!', style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+                const Text('Bravo!', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
                 Row(mainAxisSize: MainAxisSize.min, children: List.generate(3, (i) => Padding(padding: const EdgeInsets.symmetric(horizontal:4.0), child: Icon(i < state.stars ? Icons.star : Icons.star_border, color: Colors.amber, size: 32)))),
                 const SizedBox(height: 12),

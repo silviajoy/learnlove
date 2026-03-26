@@ -2,7 +2,7 @@ import 'package:impariamo_reading_app/features/01_profile/domain/models/child_pr
 
 abstract class ProfilesRepository {
   Future<List<ChildProfile>> getProfiles();
-  Future<void> addProfile(ChildProfile profile);
-  Future<void> updateProfile(ChildProfile profile);
+  Future<ChildProfile> addProfile(ChildProfile profile);
+  Future<ChildProfile> updateProfile(ChildProfile profile);
   Future<void> deleteProfile(String id);
 }
